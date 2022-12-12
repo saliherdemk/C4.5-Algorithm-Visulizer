@@ -20,13 +20,18 @@ get_excel_input.addEventListener("change", handleFileAsync, false);
 
 function main(data, keys) {
   var [shaped, len] = dataShapeUp(data, keys);
-  Object.values(shaped).forEach((element) => {
-    if (element instanceof Array) {
-      console.log(element, calculateSplitInfo({ element }, len));
+  var labelInfo;
+  var infos = {};
+  Object.entries(shaped).forEach((element) => {
+    if (element[1] instanceof Array) {
+      var a = element[1];
+      labelInfo = calculateSplitInfo({ a }, len);
     } else {
-      console.log(element, calculateSplitInfo(element, len));
+      infos[element[0]] = calculateSplitInfo(element[1], len);
     }
   });
+  console.log(labelInfo);
+  console.log(infos);
 }
 
 function initilizeObject(keys) {
@@ -58,30 +63,28 @@ function dataShapeUp(data, keys) {
   return [result, len];
 }
 
-function getBase2Log(x) {
-  return x === 1 ? 0 : Math.log(2) / Math.log(x);
-}
-
 function calculateSplitInfo(data, len) {
   var splitInfo = 0;
   Object.keys(data).forEach((attr) => {
     var key = attr;
     var countedObj = count(data[key]);
-
     var total = countedObj["total"];
+
     var a = total / len;
+    var sum = 0;
     for (let [key, value] of Object.entries(countedObj)) {
       if (key == "total") continue;
       var p = value / total;
-      var entropy = a * calculateEtropy(p);
-      splitInfo += entropy;
+      var entropy = calculateEtropy(p);
+      sum += entropy;
     }
+    splitInfo += -(a * sum);
   });
-  return splitInfo;
+  return splitInfo.toFixed(4);
 }
 
 function calculateEtropy(p) {
-  return -p * getBase2Log(p);
+  return p * Math.log2(p);
 }
 
 function count(data) {
