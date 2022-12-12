@@ -1,8 +1,8 @@
 async function handleFileAsync(e) {
   const file = e.target.files[0];
   const fileData = await file.arrayBuffer();
-  /* data is an ArrayBuffer */
   const workbook = XLSX.read(fileData);
+
   let worksheets = {};
   for (const sheetName of workbook.SheetNames) {
     worksheets["sheetName"] = XLSX.utils.sheet_to_json(
@@ -14,8 +14,8 @@ async function handleFileAsync(e) {
   var keys = Object.keys(data[0]);
   generateTableHead(table, keys);
   generateTable(table, data);
-  var shaped = dataShapeUp(data, keys);
-  console.log(shaped);
+  var [shaped, len] = dataShapeUp(data, keys);
+  calculateEntropy(shaped.Temprature, len);
 }
 get_excel_input.addEventListener("change", handleFileAsync, false);
 
@@ -52,27 +52,54 @@ function generateTable(table, data) {
   }
 }
 
-function dataShapeUp(data, keys) {
-  var result = {};
+function initilizeObject(keys) {
+  var obj = {};
   for (let key of keys) {
-    var att = {};
+    obj[key] = {};
+  }
+  return obj;
+}
+
+function dataShapeUp(data, keys) {
+  var result = initilizeObject(keys);
+  var label = keys[keys.length - 1];
+  var len = data.length;
+
+  for (let key of keys) {
     for (row of data) {
-      let a = row[key];
-      if (a in att) {
-        att[a] += 1;
+      if (result[key][row[key]]) {
+        result[key][row[key]].push(row[label]);
       } else {
-        att[a] = 1;
+        result[key][row[key]] = [row[label]];
       }
     }
-    result[key] = att;
   }
-  return result;
+  return [result, len];
 }
 
 function getBase2Log(x) {
   return Math.log(2) / Math.log(x);
 }
 
-function calculateEntropy(data) {
-  console.log(data);
+function calculateEntropy(data, len) {
+  var entropy = 0;
+  Object.keys(data).forEach((attr) => {
+    var key = attr;
+    var countedObj = count(data[key]);
+    console.log(countedObj);
+  });
+  console.log(data, len);
+}
+
+function count(data) {
+  var obj = {};
+
+  data.forEach((element) => {
+    if (element in obj) {
+      obj[element] += 1;
+    } else {
+      obj[element] = 1;
+    }
+  });
+  return obj;
 }
