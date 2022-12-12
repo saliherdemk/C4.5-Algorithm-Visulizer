@@ -20,9 +20,12 @@ get_excel_input.addEventListener("change", handleFileAsync, false);
 
 function main(data, keys) {
   var [shaped, len] = dataShapeUp(data, keys);
-  // console.log(shaped);
   Object.values(shaped).forEach((element) => {
-    // console.log(element, calculateSplitInfo(element, len));
+    if (element instanceof Array) {
+      console.log(element, calculateSplitInfo({ element }, len));
+    } else {
+      console.log(element, calculateSplitInfo(element, len));
+    }
   });
 }
 
@@ -31,6 +34,7 @@ function initilizeObject(keys) {
   for (let key of keys.slice(0, -1)) {
     obj[key] = {};
   }
+  obj[keys[keys.length - 1]] = [];
   return obj;
 }
 
@@ -39,8 +43,11 @@ function dataShapeUp(data, keys) {
   var label = keys[keys.length - 1];
   var len = data.length;
   for (let key of keys) {
-    if (key === label) continue;
     for (row of data) {
+      if (key === label) {
+        result[key].push(row[label]);
+        continue;
+      }
       if (result[key][row[key]]) {
         result[key][row[key]].push(row[label]);
       } else {
@@ -57,7 +64,6 @@ function getBase2Log(x) {
 
 function calculateSplitInfo(data, len) {
   var splitInfo = 0;
-  console.log(data);
   Object.keys(data).forEach((attr) => {
     var key = attr;
     var countedObj = count(data[key]);
