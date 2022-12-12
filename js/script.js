@@ -14,47 +14,21 @@ async function handleFileAsync(e) {
   var keys = Object.keys(data[0]);
   generateTableHead(table, keys);
   generateTable(table, data);
-  var [shaped, len] = dataShapeUp(data, keys);
-  calculateEntropy(shaped.Temprature, len);
+  main(data, keys);
 }
 get_excel_input.addEventListener("change", handleFileAsync, false);
 
-// https://www.valentinog.com/blog/html-table/
-function generateTableHead(table, data) {
-  let thead = table.createTHead();
-  thead.classList.add("text-xs", "text-gray-700", "uppercase", "bg-gray-50");
-  let row = thead.insertRow();
-  for (let key of data) {
-    let th = document.createElement("th");
-    th.classList.add("py-3", "px-6");
-    let text = document.createTextNode(key);
-    th.appendChild(text);
-    row.appendChild(th);
-  }
-}
-
-function generateTable(table, data) {
-  for (let element of data) {
-    let row = table.insertRow();
-    row.classList.add("bg-white", "border-b");
-    for (key in element) {
-      let cell = row.insertCell();
-      cell.classList.add(
-        "py-4",
-        "px-6",
-        "font-medium",
-        "text-gray-900",
-        "whitespace-nowrap"
-      );
-      let text = document.createTextNode(element[key]);
-      cell.appendChild(text);
-    }
-  }
+function main(data, keys) {
+  var [shaped, len] = dataShapeUp(data, keys);
+  // console.log(shaped);
+  Object.values(shaped).forEach((element) => {
+    // console.log(element, calculateSplitInfo(element, len));
+  });
 }
 
 function initilizeObject(keys) {
   var obj = {};
-  for (let key of keys) {
+  for (let key of keys.slice(0, -1)) {
     obj[key] = {};
   }
   return obj;
@@ -64,8 +38,8 @@ function dataShapeUp(data, keys) {
   var result = initilizeObject(keys);
   var label = keys[keys.length - 1];
   var len = data.length;
-
   for (let key of keys) {
+    if (key === label) continue;
     for (row of data) {
       if (result[key][row[key]]) {
         result[key][row[key]].push(row[label]);
@@ -78,22 +52,34 @@ function dataShapeUp(data, keys) {
 }
 
 function getBase2Log(x) {
-  return Math.log(2) / Math.log(x);
+  return x === 1 ? 0 : Math.log(2) / Math.log(x);
 }
 
-function calculateEntropy(data, len) {
-  var entropy = 0;
+function calculateSplitInfo(data, len) {
+  var splitInfo = 0;
+  console.log(data);
   Object.keys(data).forEach((attr) => {
     var key = attr;
     var countedObj = count(data[key]);
-    console.log(countedObj);
+
+    var total = countedObj["total"];
+    var a = total / len;
+    for (let [key, value] of Object.entries(countedObj)) {
+      if (key == "total") continue;
+      var p = value / total;
+      var entropy = a * calculateEtropy(p);
+      splitInfo += entropy;
+    }
   });
-  console.log(data, len);
+  return splitInfo;
+}
+
+function calculateEtropy(p) {
+  return -p * getBase2Log(p);
 }
 
 function count(data) {
-  var obj = {};
-
+  var obj = { total: data.length };
   data.forEach((element) => {
     if (element in obj) {
       obj[element] += 1;
