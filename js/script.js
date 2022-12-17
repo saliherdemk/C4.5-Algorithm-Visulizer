@@ -18,6 +18,8 @@ async function handleFileAsync(e) {
 }
 get_excel_input.addEventListener("change", handleFileAsync, false);
 
+var root = {};
+
 function main(data, keys) {
   var [shaped, len] = dataShapeUp(data, keys);
   var labelInfo;
@@ -30,8 +32,37 @@ function main(data, keys) {
       infos[element[0]] = calculateSplitInfo(element[1], len);
     }
   });
-  console.log(labelInfo);
-  console.log(infos);
+  var decision = decisionNode(labelInfo, infos);
+  console.log(decision);
+  if (!decision) return;
+
+  var subSets = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    var subKey = value[decision];
+    if (subSets[subKey]) {
+      subSets[subKey].push(value);
+    } else {
+      subSets[subKey] = [value];
+    }
+  }
+  for (const [key, value] of Object.entries(subSets)) {
+    main(value, keys);
+  }
+}
+
+function decisionNode(labelInfo, infos) {
+  var result = {};
+  for (const [key, value] of Object.entries(infos)) {
+    result[key] = (labelInfo - value).toFixed(10);
+  }
+  const isAllZero = Object.values(result).every(
+    (item) => item === "0.0000000000"
+  );
+
+  return isAllZero
+    ? false
+    : Object.keys(result).reduce((a, b) => (result[a] > result[b] ? a : b));
 }
 
 function initilizeObject(keys) {
