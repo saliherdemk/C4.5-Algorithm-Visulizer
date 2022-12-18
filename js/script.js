@@ -1,3 +1,5 @@
+var root;
+
 async function handleFileAsync(e) {
   const file = e.target.files[0];
   const fileData = await file.arrayBuffer();
@@ -15,12 +17,11 @@ async function handleFileAsync(e) {
   generateTableHead(table, keys);
   generateTable(table, data);
   main(data, keys);
+  drawGraph(root);
 }
 get_excel_input.addEventListener("change", handleFileAsync, false);
 
-var root = {};
-
-function main(data, keys) {
+function main(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);
   var labelInfo;
   var infos = {};
@@ -33,7 +34,13 @@ function main(data, keys) {
     }
   });
   var decision = decisionNode(labelInfo, infos);
-  console.log(decision);
+  var node = new Node(decision, key, parent);
+
+  if (parent) {
+    parent.addChildren(node);
+  } else {
+    root = node;
+  }
   if (!decision) return;
 
   var subSets = {};
@@ -47,7 +54,7 @@ function main(data, keys) {
     }
   }
   for (const [key, value] of Object.entries(subSets)) {
-    main(value, keys);
+    main(value, keys, key, node);
   }
 }
 
