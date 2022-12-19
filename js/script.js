@@ -39,17 +39,20 @@ function prepareRoot(root) {
 function main(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);
   var labelInfo;
+  var leaf;
   var infos = {};
   Object.entries(shaped).forEach((element) => {
     if (element[1] instanceof Array) {
       var a = element[1];
-      labelInfo = calculateSplitInfo({ a }, len);
+      [leaf, labelInfo] = calculateSplitInfo({ a }, len);
     } else {
-      infos[element[0]] = calculateSplitInfo(element[1], len);
+      [leaf, infos[element[0]]] = calculateSplitInfo(element[1], len);
     }
   });
   var decision = decisionNode(labelInfo, infos);
-  var node = new Node(decision, key, parent);
+  var nodeAttr = leaf ? leaf : decision;
+
+  var node = new Node(nodeAttr, key, parent);
 
   if (parent) {
     parent.addChildren(node);
@@ -60,7 +63,7 @@ function main(data, keys, key = "", parent = null) {
 
   var subSets = {};
 
-  for (const [key, value] of Object.entries(data)) {
+  for (const [_, value] of Object.entries(data)) {
     var subKey = value[decision];
     if (subSets[subKey]) {
       subSets[subKey].push(value);
@@ -78,6 +81,7 @@ function decisionNode(labelInfo, infos) {
   for (const [key, value] of Object.entries(infos)) {
     result[key] = (labelInfo - value).toFixed(10);
   }
+
   const isAllZero = Object.values(result).every(
     (item) => item === "0.0000000000"
   );
@@ -118,6 +122,7 @@ function dataShapeUp(data, keys) {
 
 function calculateSplitInfo(data, len) {
   var splitInfo = 0;
+  var leaf;
   Object.keys(data).forEach((attr) => {
     var key = attr;
     var countedObj = count(data[key]);
@@ -125,15 +130,17 @@ function calculateSplitInfo(data, len) {
 
     var a = total / len;
     var sum = 0;
+
     for (let [key, value] of Object.entries(countedObj)) {
       if (key == "total") continue;
       var p = value / total;
+      if (p === 1) leaf = key;
       var entropy = calculateEtropy(p);
       sum += entropy;
     }
     splitInfo += -(a * sum);
   });
-  return splitInfo.toFixed(4);
+  return [leaf, splitInfo.toFixed(4)];
 }
 
 function calculateEtropy(p) {

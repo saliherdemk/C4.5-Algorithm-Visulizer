@@ -1,4 +1,4 @@
-//Drawn graph from https://github.com/KhaledMohamedP/huffman.git
+// Basics of this function from https://github.com/KhaledMohamedP/huffman.git
 
 function drawGraph(root) {
   var margin = {
