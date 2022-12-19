@@ -2,3 +2,15 @@
     fill: none;
     stroke: black;
 }
+
+.graph{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.table-container{
+    max-height: 100;
+  transition: max-height 0.5s;
+}
