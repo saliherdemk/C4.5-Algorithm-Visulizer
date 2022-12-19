@@ -1,24 +1,6 @@
 //Drawn graph from https://github.com/KhaledMohamedP/huffman.git
 
 function drawGraph(root) {
-  // var list = [].concat(HuffmanTable),
-  //   tableSize = HuffmanTable.length;
-
-  // while (list.length > 1) {
-  //   var y = list.pop();
-  //   var x = list.pop();
-  //   var obj = {
-  //     freq: x.freq + y.freq,
-  //     children: [x, y],
-  //     value: x.value,
-  //   };
-  //   list.push(obj);
-
-  //   list.sort(function (a, b) {
-  //     return b.freq - a.freq;
-  //   });
-  // }
-
   var margin = {
       top: 25,
       right: 5,
@@ -70,7 +52,8 @@ function drawGraph(root) {
     })
     .attr("r", 25)
     .style("fill", function (d, i) {
-      return d.children || d._children ? "#FFE066" : "#FFE066";
+      var isLabel = d.parent && !d.attr;
+      return isLabel ? "#ffffff" : "lightgray";
     })
     .duration(1000)
     .ease("elastic");
@@ -89,26 +72,6 @@ function drawGraph(root) {
       return d.name;
     });
 
-  // Enter the code
-  var pathText = nodeEnter
-    .append("text")
-    .attr("y", function (d) {
-      return d.parent ? -(d.y - d.parent.y) / 2 + 5 : 0;
-    })
-    .attr("x", function (d) {
-      return !d.parent ? 0 : d.parent?.children.length * -5; // make depend on is on left or right
-    })
-    .style("font-size", "13px");
-
-  pathText
-    .transition()
-    .delay(function (d, i) {
-      return i * 85;
-    })
-    .text(function (d) {
-      return d.attr;
-    });
-
   //PATH
   var path = svg.selectAll("path.link").data(links, function (d) {
     return d.target.id;
@@ -122,4 +85,24 @@ function drawGraph(root) {
       return i * 85;
     })
     .attr("d", diagonal);
+
+  if (prunedTree) return;
+  var pathText = nodeEnter
+    .append("text")
+    .attr("y", function (d) {
+      return d.parent ? -(d.y - d.parent.y) / 2 + 5 : 0;
+    })
+    .attr("x", function (d) {
+      return !d.parent ? 0 : d.parent?.children.length * -5;
+    })
+    .style("font-size", "13px");
+
+  pathText
+    .transition()
+    .delay(function (d, i) {
+      return i * 85;
+    })
+    .text(function (d) {
+      return d.attr;
+    });
 }

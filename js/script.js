@@ -1,5 +1,5 @@
 var root;
-
+var prunedTree = true;
 async function handleFileAsync(e) {
   const file = e.target.files[0];
   const fileData = await file.arrayBuffer();
@@ -17,9 +17,24 @@ async function handleFileAsync(e) {
   generateTableHead(table, keys);
   generateTable(table, data);
   main(data, keys);
+
+  prunedTree && prepareRoot(root);
+
   drawGraph(root);
 }
 get_excel_input.addEventListener("change", handleFileAsync, false);
+
+function prepareRoot(root) {
+  if (root.parent && !root.attr) return;
+  for (let i = 0; i < root.children.length; i++) {
+    const element = root.children[i];
+    var newNode = new Node(element.attr, "", element.parent);
+    element.parent.replaceChildren(element, newNode);
+    newNode.addChildren(element);
+
+    prepareRoot(element);
+  }
+}
 
 function main(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);

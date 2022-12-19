@@ -9,4 +9,11 @@ class Node {
   addChildren(node) {
     this.children.push(node);
   }
+
+  replaceChildren(oldNode, newNode) {
+    const index = this.children.indexOf(oldNode);
+    if (index > -1) {
+      this.children.splice(index, 1, newNode);
+    }
+  }
 }
