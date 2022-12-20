@@ -1,9 +1,13 @@
 var root;
 const table = document.querySelector("table");
+const dropArea = document.getElementById("drop-area");
+const dragText = dropArea.querySelector("header");
+
 var prunedTree = true;
 var currRows = 0;
 var increaseRow = 5;
 var pureData;
+
 async function handleFileAsync(e) {
   const file = e.target.files[0];
   const fileData = await file.arrayBuffer();
@@ -26,6 +30,7 @@ async function handleFileAsync(e) {
 
   drawGraph(root);
 }
+
 get_excel_input.addEventListener("change", handleFileAsync, false);
 
 function prepareRoot(root) {
@@ -161,4 +166,26 @@ function count(data) {
     }
   });
   return obj;
+}
+
+// https://www.codingnepalweb.com/drag-drop-file-upload-feature-javascript/
+dropArea.addEventListener("dragover", (event) => {
+  event.preventDefault();
+  dropArea.classList.add("active");
+  dragText.textContent = "Release to Upload File";
+});
+
+dropArea.addEventListener("dragleave", () => {
+  dropArea.classList.remove("active");
+  dragText.textContent = "Drag & Drop to Upload File";
+});
+
+dropArea.addEventListener("drop", (event) => {
+  event.preventDefault();
+  file = event.dataTransfer.files[0];
+  showFile();
+});
+
+function showFile() {
+  let fileType = file.type;
 }
