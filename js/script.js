@@ -1,5 +1,9 @@
 var root;
+const table = document.querySelector("table");
 var prunedTree = true;
+var currRows = 0;
+var increaseRow = 5;
+var pureData;
 async function handleFileAsync(e) {
   const file = e.target.files[0];
   const fileData = await file.arrayBuffer();
@@ -11,12 +15,12 @@ async function handleFileAsync(e) {
       workbook.Sheets[sheetName]
     );
   }
-  var data = worksheets.sheetName;
-  var table = document.querySelector("table");
-  var keys = Object.keys(data[0]);
-  generateTableHead(table, keys);
-  generateTable(table, data);
-  main(data, keys);
+  pureData = worksheets.sheetName;
+
+  generateTableHead();
+  generateTable();
+
+  main(pureData, Object.keys(pureData[0]));
 
   prunedTree && prepareRoot(root);
 

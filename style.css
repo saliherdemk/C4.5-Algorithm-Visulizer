@@ -11,6 +11,6 @@
 
 
 .table-container{
-    max-height: 100;
-  transition: max-height 0.5s;
+    max-height: 1000px;
+    transition: max-height 0.5s;
 }

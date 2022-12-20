@@ -10,6 +10,8 @@
   <body>
     <input type="file" id="get_excel_input" />
     <button onclick="toggleTable()" id="btn-table">Hide Table</button>
+    <button onclick="increaseCurrentRow()" id="show-row">Show More Rows</button>
+
     <div class="table-container overflow-auto	relative">
       <table class="w-full text-sm text-left text-gray-500"></table>
     </div>
@@ -24,10 +26,10 @@
   ></script>
   <script src="./js/d3.js"></script>
   <script src="./js/draw.js"></script>
+  <script src="./js/node.js"></script>
+  <script src="./js/script.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./js/node.js"></script>
 
   <script src="./js/generateTable.js"></script>
-  <script src="./js/script.js"></script>
 </html>
