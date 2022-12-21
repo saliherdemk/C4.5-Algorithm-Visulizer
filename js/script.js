@@ -26,6 +26,7 @@ function createTree(data, keys, key = "", parent = null) {
   var nodeAttr = leaf ? leaf : decision;
 
   var node = new Node(nodeAttr, key, parent);
+  nodeNumber += 1;
 
   if (parent) {
     parent.addChildren(node);
@@ -69,6 +70,7 @@ function prepareRoot(root) {
   for (let i = 0; i < root.children.length; i++) {
     const element = root.children[i];
     var newNode = new Node(element.attr, "", element.parent);
+    nodeNumber += 1;
     element.parent.replaceChildren(element, newNode);
     newNode.addChildren(element);
 
@@ -145,17 +147,17 @@ function count(data) {
 }
 
 //https://codepen.io/Gutto/pen/GBLPyN
-tree.addEventListener("mousedown", (e) => MouseDown(e));
-tree.addEventListener("mouseup", (e) => mouseUp(e));
-tree.addEventListener("mouseleave", (e) => mouseLeave(e));
-tree.addEventListener("mousemove", (e) => mouseMove(e));
+treeContainer.addEventListener("mousedown", (e) => MouseDown(e));
+treeContainer.addEventListener("mouseup", (e) => mouseUp(e));
+treeContainer.addEventListener("mouseleave", (e) => mouseLeave(e));
+treeContainer.addEventListener("mousemove", (e) => mouseMove(e));
 
 function MouseDown(e) {
   isdown = true;
-  startx = e.pageX - tree.offsetLeft;
-  starty = e.pageY - tree.offsetTop;
-  scrleft = tree.scrollLeft;
-  scrtop = tree.scrollTop;
+  startx = e.pageX - treeContainer.offsetLeft;
+  starty = e.pageY - treeContainer.offsetTop;
+  scrleft = treeContainer.scrollLeft;
+  scrtop = treeContainer.scrollTop;
 }
 
 function mouseUp(e) {
@@ -170,12 +172,26 @@ function mouseMove(e) {
   if (isdown) {
     e.preventDefault();
 
-    var y = e.pageY - tree.offsetTop;
+    var y = e.pageY - treeContainer.offsetTop;
     var goY = y - starty;
-    tree.scrollTop = scrtop - goY;
+    treeContainer.scrollTop = scrtop - goY;
 
-    var x = e.pageX - tree.offsetLeft;
+    var x = e.pageX - treeContainer.offsetLeft;
     var goX = x - startx;
-    tree.scrollLeft = scrleft - goX;
+    treeContainer.scrollLeft = scrleft - goX;
   }
 }
+
+var scale = 1;
+function zoom(event) {
+  const el = document.querySelector("svg");
+
+  event.preventDefault();
+
+  scale += event.deltaY * -0.001;
+
+  // Apply scale transform
+  el.style.transform = `scale(${scale})`;
+}
+
+treeContainer.onwheel = zoom;

@@ -7,8 +7,8 @@ function drawGraph(root) {
       bottom: 5,
       left: 5,
     },
-    width = 500,
-    height = 500;
+    width = 100 * nodeNumber - margin.right - margin.left,
+    height = 100 * nodeNumber - margin.top - margin.bottom;
 
   var i = 0;
 
@@ -16,11 +16,11 @@ function drawGraph(root) {
   var diagonal = d3.svg.diagonal().projection(function (d) {
     return [d.x, d.y];
   });
-  var svg = d3
+  svg = d3
     .select(".graph")
     .append("svg")
-    .attr("width", width + margin.right + margin.left)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height + margin.top)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -28,7 +28,7 @@ function drawGraph(root) {
     links = tree.links(nodes);
 
   nodes.forEach(function (d) {
-    d.y = d.depth * 100;
+    d.y = d.depth * 70;
   });
 
   var gNode = svg.selectAll("g.node").data(nodes, function (d) {
