@@ -1,51 +1,22 @@
 var root;
-const table = document.querySelector("table");
-const dropArea = document.getElementById("drop-area");
-const dragText = dropArea.querySelector("header");
 
 var prunedTree = true;
 var currRows = 0;
 var increaseRow = 5;
 var pureData;
 
-async function handleFileAsync(e) {
-  const file = e.target.files[0];
-  const fileData = await file.arrayBuffer();
-  const workbook = XLSX.read(fileData);
-
-  let worksheets = {};
-  for (const sheetName of workbook.SheetNames) {
-    worksheets["sheetName"] = XLSX.utils.sheet_to_json(
-      workbook.Sheets[sheetName]
-    );
-  }
-  pureData = worksheets.sheetName;
-
+function main() {
   generateTableHead();
   generateTable();
 
-  main(pureData, Object.keys(pureData[0]));
+  createTree(pureData, Object.keys(pureData[0]));
 
   prunedTree && prepareRoot(root);
 
   drawGraph(root);
 }
 
-get_excel_input.addEventListener("change", handleFileAsync, false);
-
-function prepareRoot(root) {
-  if (root.parent && !root.attr) return;
-  for (let i = 0; i < root.children.length; i++) {
-    const element = root.children[i];
-    var newNode = new Node(element.attr, "", element.parent);
-    element.parent.replaceChildren(element, newNode);
-    newNode.addChildren(element);
-
-    prepareRoot(element);
-  }
-}
-
-function main(data, keys, key = "", parent = null) {
+function createTree(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);
   var labelInfo;
   var leaf;
@@ -81,7 +52,7 @@ function main(data, keys, key = "", parent = null) {
     }
   }
   for (const [key, value] of Object.entries(subSets)) {
-    main(value, keys, key, node);
+    createTree(value, keys, key, node);
   }
 }
 
@@ -98,6 +69,18 @@ function decisionNode(labelInfo, infos) {
   return isAllZero
     ? false
     : Object.keys(result).reduce((a, b) => (result[a] > result[b] ? a : b));
+}
+
+function prepareRoot(root) {
+  if (root.parent && !root.attr) return;
+  for (let i = 0; i < root.children.length; i++) {
+    const element = root.children[i];
+    var newNode = new Node(element.attr, "", element.parent);
+    element.parent.replaceChildren(element, newNode);
+    newNode.addChildren(element);
+
+    prepareRoot(element);
+  }
 }
 
 function initilizeObject(keys) {
@@ -166,26 +149,4 @@ function count(data) {
     }
   });
   return obj;
-}
-
-// https://www.codingnepalweb.com/drag-drop-file-upload-feature-javascript/
-dropArea.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  dropArea.classList.add("active");
-  dragText.textContent = "Release to Upload File";
-});
-
-dropArea.addEventListener("dragleave", () => {
-  dropArea.classList.remove("active");
-  dragText.textContent = "Drag & Drop to Upload File";
-});
-
-dropArea.addEventListener("drop", (event) => {
-  event.preventDefault();
-  file = event.dataTransfer.files[0];
-  showFile();
-});
-
-function showFile() {
-  let fileType = file.type;
 }

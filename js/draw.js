@@ -53,7 +53,7 @@ function drawGraph(root) {
     .attr("r", 25)
     .style("fill", function (d, i) {
       var isLabel = d.parent && !d.attr;
-      return isLabel ? "#ffffff" : "lightgray";
+      return isLabel ? "#f2f2f2" : "white";
     })
     .duration(1000)
     .ease("elastic");

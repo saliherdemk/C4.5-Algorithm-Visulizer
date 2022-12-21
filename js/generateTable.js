@@ -1,4 +1,7 @@
 // https://www.valentinog.com/blog/html-table/
+
+const table = document.querySelector("table");
+
 function generateTableHead() {
   var keys = Object.keys(pureData[0]);
   let thead = table.createTHead();
