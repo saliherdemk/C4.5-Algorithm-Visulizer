@@ -1,13 +1,7 @@
 // Basics of this function from https://github.com/KhaledMohamedP/huffman.git
 
 function drawGraph(root) {
-  var margin = {
-      top: 25,
-      right: 5,
-      bottom: 5,
-      left: 5,
-    },
-    width = 100 * nodeNumber,
+  var width = 100 * nodeNumber,
     height = 100 * nodeNumber;
 
   var i = 0;
@@ -21,7 +15,7 @@ function drawGraph(root) {
     links = tree.links(nodes);
 
   nodes.forEach(function (d) {
-    var currHeight = d.depth * 70;
+    var currHeight = d.depth * 100;
     d.y = currHeight;
     treeHeight = currHeight + 70 > treeHeight ? currHeight + 70 : treeHeight;
   });
@@ -51,7 +45,7 @@ function drawGraph(root) {
   circle
     .transition()
     .delay(function (d, i) {
-      return i * 80;
+      return i;
     })
     .attr("r", 25)
     .style("fill", function (d, i) {
@@ -69,7 +63,7 @@ function drawGraph(root) {
   charText
     .transition()
     .delay(function (d, i) {
-      return i * 90;
+      return i;
     })
     .text(function (d) {
       return d.name;
@@ -85,7 +79,7 @@ function drawGraph(root) {
   pathT
     .transition()
     .delay(function (d, i) {
-      return i * 85;
+      return i;
     })
     .attr("d", diagonal);
 
@@ -103,7 +97,7 @@ function drawGraph(root) {
   pathText
     .transition()
     .delay(function (d, i) {
-      return i * 85;
+      return i;
     })
     .text(function (d) {
       return d.attr;

@@ -7,6 +7,8 @@ function main() {
   prunedTree && prepareRoot(root);
 
   drawGraph(root);
+
+  document.querySelector(".node").scrollIntoView();
 }
 
 function createTree(data, keys, key = "", parent = null) {
@@ -192,6 +194,8 @@ function zoom(event) {
 
   // Apply scale transform
   el.style.transform = `scale(${scale})`;
+
+  // document.querySelector(".node").scrollIntoView();
 }
 
 treeContainer.onwheel = zoom;
