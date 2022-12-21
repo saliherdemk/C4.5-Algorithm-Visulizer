@@ -16,4 +16,4 @@ var currRows = 0;
 var increaseRow = 5;
 var pureData;
 var nodeNumber = 0;
-var svg;
+var treeHeight = 0;
