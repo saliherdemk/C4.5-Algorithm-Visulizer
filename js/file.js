@@ -1,9 +1,5 @@
 // https://www.codingnepalweb.com/drag-drop-file-upload-feature-javascript/
 
-const dropArea = document.getElementById("drop-area");
-const dragText = dropArea.querySelector("header");
-const getExcelInput = document.getElementById("get_excel_input");
-
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
   dropArea.classList.add("active");
@@ -44,7 +40,19 @@ async function extractData(file) {
     );
   }
   pureData = worksheets.sheetName;
+  switchTableUi();
   main();
+}
+
+function switchTableUi() {
+  dropArea.classList.add("hidden");
+  showRowBtn.classList.remove("hidden");
+  toggleTableBtn.classList.remove("hidden");
+}
+
+function uiReset() {
+  showRowBtn.classList.add("hidden");
+  toggleTableBtn.classList.add("hidden");
 }
 
 function setFile(e) {

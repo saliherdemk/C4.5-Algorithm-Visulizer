@@ -3,24 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
-    <h1 class="text-center text-2xl font-bold my-5">C4.5 Algorithm Visulaizer</h1>
+    <h1>C4.5 Algorithm Visulaizer</h1>
     <div id="drop-area">
       <header>Drag & Drop to Upload File</header>
-    <span>OR</span>
-    <button onclick="inputClick()">Browse File</button>
-    <input type="file" id="get_excel_input" accept=".xlsx, .xls, .csv" hidden/>
-    
+      <span>OR</span>
+      <button onclick="inputClick()">Browse File</button>
+      <input
+        type="file"
+        id="get_excel_input"
+        accept=".xlsx, .xls, .csv"
+        hidden
+      />
     </div>
-    <button onclick="toggleTable()" id="btn-table">Hide Table</button>
-    <button onclick="increaseCurrentRow()" id="show-row">Show More Rows</button>
+    <div class="buttons">
+      <button onclick="toggleTable()" id="toggle-table" class="hidden btn">
+        Hide Table
+      </button>
+      <button onclick="increaseCurrentRow()" id="show-row" class="hidden btn">
+        Show More Rows
+      </button>
+    </div>
 
-    <div class="table-container overflow-auto	relative">
-      <table class="w-full text-sm text-left text-gray-500"></table>
+    <div class="table-container">
+      <table></table>
     </div>
 
     <div class="graph"></div>
@@ -31,13 +41,14 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
-  <script src="./js/d3.js"></script>
+  <!-- <script src="./js/d3.js"></script> -->
+  <script src="https://d3js.org/d3.v4.js"></script>
+
+  <script src="./js/variables.js"></script>
   <script src="./js/draw.js"></script>
   <script src="./js/node.js"></script>
   <script src="./js/file.js"></script>
   <script src="./js/script.js"></script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
 
   <script src="./js/generateTable.js"></script>
 </html>
