@@ -8,11 +8,14 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>C4.5 Algorithm Visulaizer</h1>
+    <h1>C4.5 Algorithm Visualizer</h1>
     <div id="drop-area">
-      <header>Drag & Drop to Upload File</header>
+      <div id="drag-drop">
+        <img src="/media/upload.png" width="80" alt="" />
+        <header>Drag & Drop to Upload File</header>
+      </div>
       <span>OR</span>
-      <button onclick="inputClick()">Browse File</button>
+      <button onclick="inputClick()" id="browse">Browse File</button>
       <input
         type="file"
         id="get_excel_input"
@@ -21,15 +24,33 @@
       />
     </div>
     <div class="buttons hidden">
-      <button onclick="reset()" id="reset-table" class="btn">
-        New Dataset
-      </button>
-      <button onclick="toggleTable()" id="toggle-table" class="btn">
-        Hide Table
-      </button>
-      <button onclick="increaseCurrentRow()" id="show-row" class="btn">
-        Show More Rows
-      </button>
+      <div class="left-buttons">
+        <button onclick="reset()" id="reset-table" class="btn">
+          New Dataset
+        </button>
+
+        <span id="row-info">
+          <span>Shown rows: </span>
+          <span id="curr-rows"></span>
+          <span>/</span>
+          <span id="total-rows"></span>
+        </span>
+
+        <button onclick="toggleTable()" id="toggle-table" class="btn">
+          Shrink Table
+        </button>
+      </div>
+
+      <div id="row-inputs">
+        <select name="rows" id="select-row" onchange="setIncreaseRow()">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+        <button onclick="generateTable()" id="show-row" class="btn">
+          Show More Rows
+        </button>
+      </div>
     </div>
 
     <div class="table-container">

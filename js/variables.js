@@ -6,6 +6,10 @@ const table = document.querySelector("table");
 const tableContainer = document.querySelector(".table-container");
 const treeContainer = document.querySelector(".graph");
 const controlPanel = document.querySelector(".buttons");
+const increaseRowSelect = document.querySelector("select");
+const currRowsSpan = document.getElementById("curr-rows");
+const totalRowsSpan = document.getElementById("total-rows");
+const showRowBtn = document.getElementById("show-row");
 
 var starty, startx, scrleft, scrtop, isdown;
 
@@ -18,3 +22,4 @@ var pureData;
 var nodeNumber = 0;
 var treeHeight = 0;
 var scale = 1;
+var totalRows = 0;

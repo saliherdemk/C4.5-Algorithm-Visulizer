@@ -75,7 +75,7 @@ table {
 }
 
 #drop-area {
-  border: 1px solid black;
+  border: 1px dotted black;
   margin: 10%;
   padding-top: 10%;
   padding-bottom: 10%;
@@ -90,20 +90,106 @@ table {
 }
 
 .btn {
-  background-color: #c7c6c6;
+  padding: 0.85rem;
+  font-weight: 700;
+  background-color: #4299e1;
+  color: white;
   border: none;
-  padding: 10px;
-  border-radius: 10px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-right: 10px;
+  border-radius: 0.25rem;
+  cursor: pointer;
 }
 
 h1 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   line-height: 2rem;
   font-weight: 700;
   text-align: center;
+}
+
+#browse {
+  padding: 0.9rem;
+  margin-top: 0.9rem;
+  background-color: transparent;
+  color: #1d4ed8;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: #3b82f6;
+  cursor: pointer;
+}
+
+#browse:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+#drag-drop {
+  text-align: center;
+  padding: 10px;
+}
+
+.active {
+  border-style: solid !important;
+  transition: all 0.2s;
+  transform: scale(1.04);
+}
+
+.graph::-webkit-scrollbar,
+.table-container::-webkit-scrollbar {
+  width: 5px;
+  background-color: lightgray;
+}
+
+.graph::-webkit-scrollbar-thumb,
+.table-container::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+.graph::-webkit-scrollbar:horizontal {
+  height: 7px;
+}
+
+.graph::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(83, 82, 82);
+}
+
+.buttons {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex: 1;
+}
+
+#row-inputs {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  text-align-last: center;
+  padding: 2px;
+}
+
+#show-row {
+  margin-top: 5px;
+}
+
+#row-info {
+  padding: 0.85rem;
+  font-weight: 700;
+  background-color: #52525b;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
 }

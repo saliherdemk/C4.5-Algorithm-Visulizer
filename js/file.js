@@ -40,6 +40,8 @@ async function extractData(file) {
     );
   }
   pureData = worksheets.sheetName;
+
+  totalRows = pureData.length;
   switchToTableUi();
   main();
 }
@@ -52,8 +54,11 @@ function switchToTableUi() {
 
 function reset() {
   treeContainer.innerHTML = "";
+  console.log(table.innerHTML);
   table.innerHTML = "";
-  toggleTableBtn.innerText = "Hide Table";
+  console.log(table.innerHTML);
+
+  toggleTableBtn.innerText = "Shrink Table";
   dropArea.classList.remove("hidden");
   treeContainer.classList.add("hidden");
   controlPanel.classList.add("hidden");
@@ -62,10 +67,13 @@ function reset() {
   nodeNumber = 0;
   treeHeight = 0;
   scale = 1;
+  increaseRowSelect.value = 5;
+  totalRows = 0;
+
+  generateTable();
 }
 
 function setFile(e) {
-  console.log(e);
   var file = e.target.files[0];
   checkFileIsLegit(file);
 }

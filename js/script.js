@@ -203,3 +203,7 @@ function backToRoot() {
     inline: "center",
   });
 }
+
+function setIncreaseRow() {
+  increaseRow = parseInt(increaseRowSelect.value);
+}

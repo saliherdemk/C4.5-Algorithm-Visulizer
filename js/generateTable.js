@@ -23,21 +23,25 @@ function generateTable() {
   for (let element of Object.values(sliced)) {
     createRow(element);
   }
+
+  currRows += increaseRow;
+  currRows = currRows > totalRows ? totalRows : currRows;
+
+  increaseRowSelect.disabled = currRows === totalRows;
+  showRowBtn.disabled = currRows === totalRows;
+
+  currRowsSpan.innerText = String(currRows);
+  totalRowsSpan.innerText = String(totalRows);
 }
 
 function toggleTable() {
-  if (toggleTableBtn.innerText === "Hide Table") {
+  if (toggleTableBtn.innerText === "Shrink Table") {
     tableContainer.style.maxHeight = "90px";
-    toggleTableBtn.innerText = "Show Table";
-  } else {
-    tableContainer.style.maxHeight = "1000px";
-    toggleTableBtn.innerText = "Hide Table";
+    toggleTableBtn.innerText = "Expand Table";
+    return;
   }
-}
-
-function increaseCurrentRow() {
-  currRows += increaseRow;
-  generateTable();
+  tableContainer.style.maxHeight = "1000px";
+  toggleTableBtn.innerText = "Shrink Table";
 }
 
 function createRow(element) {
