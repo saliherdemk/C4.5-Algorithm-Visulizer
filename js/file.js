@@ -40,27 +40,38 @@ async function extractData(file) {
     );
   }
   pureData = worksheets.sheetName;
-  switchTableUi();
+  switchToTableUi();
   main();
 }
 
-function switchTableUi() {
+function switchToTableUi() {
   dropArea.classList.add("hidden");
-  showRowBtn.classList.remove("hidden");
-  toggleTableBtn.classList.remove("hidden");
+  treeContainer.classList.remove("hidden");
+  controlPanel.classList.remove("hidden");
 }
 
-function uiReset() {
-  showRowBtn.classList.add("hidden");
-  toggleTableBtn.classList.add("hidden");
+function reset() {
+  treeContainer.innerHTML = "";
+  table.innerHTML = "";
+  toggleTableBtn.innerText = "Hide Table";
+  dropArea.classList.remove("hidden");
+  treeContainer.classList.add("hidden");
+  controlPanel.classList.add("hidden");
+
+  currRows = 0;
+  nodeNumber = 0;
+  treeHeight = 0;
+  scale = 1;
 }
 
 function setFile(e) {
+  console.log(e);
   var file = e.target.files[0];
   checkFileIsLegit(file);
 }
 
 function inputClick() {
+  getExcelInput.value = null;
   getExcelInput.click();
 }
 

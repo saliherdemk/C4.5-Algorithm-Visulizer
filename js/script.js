@@ -8,7 +8,7 @@ function main() {
 
   drawGraph(root);
 
-  document.querySelector(".node").scrollIntoView();
+  backToRoot();
 }
 
 function createTree(data, keys, key = "", parent = null) {
@@ -184,7 +184,6 @@ function mouseMove(e) {
   }
 }
 
-var scale = 1;
 function zoom(event) {
   const el = document.querySelector("svg");
 
@@ -192,10 +191,15 @@ function zoom(event) {
 
   scale += event.deltaY * -0.001;
 
-  // Apply scale transform
   el.style.transform = `scale(${scale})`;
-
-  // document.querySelector(".node").scrollIntoView();
 }
 
 treeContainer.onwheel = zoom;
+
+function backToRoot() {
+  document.querySelector(".node").scrollIntoView({
+    behavior: "auto",
+    block: "center",
+    inline: "center",
+  });
+}

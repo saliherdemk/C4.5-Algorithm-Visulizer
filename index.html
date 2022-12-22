@@ -20,11 +20,14 @@
         hidden
       />
     </div>
-    <div class="buttons">
-      <button onclick="toggleTable()" id="toggle-table" class="hidden btn">
+    <div class="buttons hidden">
+      <button onclick="reset()" id="reset-table" class="btn">
+        New Dataset
+      </button>
+      <button onclick="toggleTable()" id="toggle-table" class="btn">
         Hide Table
       </button>
-      <button onclick="increaseCurrentRow()" id="show-row" class="hidden btn">
+      <button onclick="increaseCurrentRow()" id="show-row" class="btn">
         Show More Rows
       </button>
     </div>
@@ -33,7 +36,7 @@
       <table></table>
     </div>
 
-    <div class="graph"></div>
+    <div class="graph hidden"></div>
   </body>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.core.min.js"

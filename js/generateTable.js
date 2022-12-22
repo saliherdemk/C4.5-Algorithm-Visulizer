@@ -14,15 +14,6 @@ function generateTableHead() {
   }
 }
 
-function toggleTable() {
-  if (toggleTableBtn.innerText === "Hide Table") {
-    tableContainer.style.maxHeight = "90px";
-    toggleTableBtn.innerText = "Show Table";
-  } else {
-    tableContainer.style.maxHeight = "1000px";
-    toggleTableBtn.innerText = "Hide Table";
-  }
-}
 function generateTable() {
   // https://stackoverflow.com/questions/39336556/how-can-i-slice-an-object-in-javascript
   const sliced = Object.fromEntries(
@@ -31,6 +22,16 @@ function generateTable() {
 
   for (let element of Object.values(sliced)) {
     createRow(element);
+  }
+}
+
+function toggleTable() {
+  if (toggleTableBtn.innerText === "Hide Table") {
+    tableContainer.style.maxHeight = "90px";
+    toggleTableBtn.innerText = "Show Table";
+  } else {
+    tableContainer.style.maxHeight = "1000px";
+    toggleTableBtn.innerText = "Hide Table";
   }
 }
 
