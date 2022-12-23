@@ -1,8 +1,10 @@
 function main() {
   generateTableHead();
   generateTable();
+  var keys = Object.keys(pureData[0]);
+  createTree(pureData, keys);
 
-  createTree(pureData, Object.keys(pureData[0]));
+  generateInputRow(keys);
 
   prunedTree && prepareRoot(root);
 
@@ -42,12 +44,16 @@ function createTree(data, keys, key = "", parent = null) {
 
   for (const [_, value] of Object.entries(data)) {
     var subKey = value[decision];
+
+    !attributes[decision].includes(subKey) && attributes[decision].push(subKey);
+
     if (subSets[subKey]) {
       subSets[subKey].push(value);
-    } else {
-      subSets[subKey] = [value];
+      continue;
     }
+    subSets[subKey] = [value];
   }
+
   for (const [key, value] of Object.entries(subSets)) {
     createTree(value, keys, key, node);
   }

@@ -19,7 +19,9 @@ var prunedTree = true;
 var currRows = 0;
 var increaseRow = 5;
 var pureData;
-var nodeNumber = 0;
+var nodeNumber = 0; // This is just for setting svg size
 var treeHeight = 0;
 var scale = 1;
 var totalRows = 0;
+var attributes = {};
+var predAttributes = {};

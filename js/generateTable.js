@@ -5,7 +5,11 @@ function generateTableHead() {
   let thead = table.createTHead();
   thead.classList.add("thead");
   let row = thead.insertRow();
-  for (let key of keys) {
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    if (i !== keys.length - 1) attributes[key] = [];
+
     let th = document.createElement("th");
     th.classList.add("th");
     let text = document.createTextNode(key);
@@ -57,4 +61,51 @@ function createRow(element) {
     let text = document.createTextNode(element[key]);
     cell.appendChild(text);
   }
+}
+
+function generateInputRow(keys) {
+  let row = table.insertRow();
+  row.classList.add("row");
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    let cell = row.insertCell();
+    cell.classList.add("cell");
+
+    let element;
+
+    if (i === keys.length - 1) {
+      element = document.createElement("button");
+      element.innerText = "Perdict";
+    } else {
+      element = createSelectElement(key, attributes[key]);
+    }
+    cell.appendChild(element);
+  }
+}
+
+function createSelectElement(key, options) {
+  var select = document.createElement("select");
+  for (let i = 0; i < options.length; i++) {
+    const element = options[i];
+    option = document.createElement("option");
+
+    option.value = option.textContent = element;
+
+    select.appendChild(option);
+  }
+
+  select.id = key;
+
+  select.onchange = (e) => {
+    setPredictionObj(e);
+  };
+
+  predAttributes[key] = select.value;
+
+  return select;
+}
+
+function setPredictionObj(e) {
+  let element = e.target;
+  predAttributes[element.id] = element.value;
 }
