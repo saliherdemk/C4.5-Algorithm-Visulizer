@@ -24,6 +24,7 @@ function createTree(data, keys, key = "", parent = null) {
       [leaf, infos[element[0]]] = calculateSplitInfo(element[1], len);
     }
   });
+  console.log(infos);
   var decision = decisionNode(labelInfo, infos);
   var nodeAttr = leaf ? leaf : decision;
 
@@ -190,8 +191,10 @@ function zoom(event) {
   event.preventDefault();
 
   scale += event.deltaY * -0.001;
+  scale = Math.min(Math.max(0.25, scale), 1);
 
   el.style.transform = `scale(${scale})`;
+  // backToRoot();
 }
 
 treeContainer.onwheel = zoom;
@@ -199,7 +202,7 @@ treeContainer.onwheel = zoom;
 function backToRoot() {
   document.querySelector(".node").scrollIntoView({
     behavior: "auto",
-    block: "center",
+    block: "nearest",
     inline: "center",
   });
 }

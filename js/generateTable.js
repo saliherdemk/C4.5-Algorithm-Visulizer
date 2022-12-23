@@ -25,10 +25,14 @@ function generateTable() {
   }
 
   currRows += increaseRow;
+  setIncreaseRowInputs();
+}
+
+function setIncreaseRowInputs() {
   currRows = currRows > totalRows ? totalRows : currRows;
 
-  increaseRowSelect.disabled = currRows === totalRows;
-  showRowBtn.disabled = currRows === totalRows;
+  increaseRowSelect.disabled = currRows !== 0 && currRows === totalRows;
+  showRowBtn.disabled = currRows !== 0 && currRows === totalRows;
 
   currRowsSpan.innerText = String(currRows);
   totalRowsSpan.innerText = String(totalRows);

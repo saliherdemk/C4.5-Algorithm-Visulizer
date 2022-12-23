@@ -54,11 +54,10 @@ function switchToTableUi() {
 
 function reset() {
   treeContainer.innerHTML = "";
-  console.log(table.innerHTML);
   table.innerHTML = "";
-  console.log(table.innerHTML);
 
   toggleTableBtn.innerText = "Shrink Table";
+  tableContainer.style.maxHeight = "1000px";
   dropArea.classList.remove("hidden");
   treeContainer.classList.add("hidden");
   controlPanel.classList.add("hidden");
@@ -68,9 +67,10 @@ function reset() {
   treeHeight = 0;
   scale = 1;
   increaseRowSelect.value = 5;
+  increaseRow = 5;
   totalRows = 0;
 
-  generateTable();
+  setIncreaseRowInputs();
 }
 
 function setFile(e) {
