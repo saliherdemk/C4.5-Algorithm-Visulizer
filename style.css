@@ -1,11 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap");
+
 body {
   background-color: #f2f2f2;
-}
-.link {
-  fill: none;
-  stroke: black;
+  font-family: "Poppins";
 }
 
+.hidden {
+  display: none !important;
+}
+
+h1 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Graph */
 .graph {
   position: relative;
   width: 80%;
@@ -13,9 +26,35 @@ body {
   border: 2px solid black;
   margin: auto;
   margin-top: 5%;
-  justify-content: center;
   overflow: auto;
   background-color: white;
+  text-align: center;
+}
+
+.graph::-webkit-scrollbar,
+.table-container::-webkit-scrollbar {
+  width: 5px;
+  background-color: lightgray;
+}
+
+.graph::-webkit-scrollbar-thumb,
+.table-container::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+.graph::-webkit-scrollbar:horizontal {
+  height: 7px;
+}
+
+.graph::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(83, 82, 82);
+}
+
+#go-root-btn {
+  position: absolute;
+  margin: 10px;
+  right: 0;
 }
 
 svg {
@@ -24,6 +63,12 @@ svg {
   height: auto;
 }
 
+.link {
+  fill: none;
+  stroke: black;
+}
+
+/* Table */
 .table-container {
   max-height: 1000px;
   transition: max-height 0.5s;
@@ -74,38 +119,14 @@ table {
   white-space: nowrap;
 }
 
+/* Drag and Drop Area */
 #drop-area {
   border: 1px dotted black;
   margin: 10%;
-  padding-top: 10%;
-  padding-bottom: 10%;
   background-color: white;
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.btn {
-  padding: 0.85rem;
-  font-weight: 700;
-  background-color: #4299e1;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-h1 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  font-size: 2rem;
-  line-height: 2rem;
-  font-weight: 700;
-  text-align: center;
 }
 
 #browse {
@@ -126,7 +147,7 @@ h1 {
 
 #drag-drop {
   text-align: center;
-  padding: 10px;
+  padding-top: 3%;
 }
 
 .active {
@@ -135,24 +156,20 @@ h1 {
   transform: scale(1.04);
 }
 
-.graph::-webkit-scrollbar,
-.table-container::-webkit-scrollbar {
-  width: 5px;
-  background-color: lightgray;
+#info {
+  text-align: center;
 }
 
-.graph::-webkit-scrollbar-thumb,
-.table-container::-webkit-scrollbar-thumb {
-  background-color: gray;
-  border-radius: 5px;
-}
+/* Control Panel */
 
-.graph::-webkit-scrollbar:horizontal {
-  height: 7px;
-}
-
-.graph::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(83, 82, 82);
+.btn {
+  padding: 0.85rem;
+  font-weight: 700;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
 }
 
 .buttons {
@@ -192,14 +209,4 @@ select {
   color: white;
   border: none;
   border-radius: 0.25rem;
-}
-
-#go-root-btn {
-  position: absolute;
-  margin: 10px;
-  right: 0;
-}
-
-svg {
-  z-index: 1;
 }

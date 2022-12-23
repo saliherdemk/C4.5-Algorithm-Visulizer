@@ -24,8 +24,8 @@ function createTree(data, keys, key = "", parent = null) {
       [leaf, infos[element[0]]] = calculateSplitInfo(element[1], len);
     }
   });
-  console.log(infos);
   var decision = decisionNode(labelInfo, infos);
+
   var nodeAttr = leaf ? leaf : decision;
 
   var node = new Node(nodeAttr, key, parent);
@@ -130,7 +130,7 @@ function calculateSplitInfo(data, len) {
     }
     splitInfo += -(a * sum);
   });
-  return [leaf, splitInfo.toFixed(4)];
+  return [leaf, splitInfo.toFixed(10)];
 }
 
 function calculateEtropy(p) {

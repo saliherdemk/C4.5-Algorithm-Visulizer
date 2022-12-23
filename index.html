@@ -13,6 +13,7 @@
       <div id="drag-drop">
         <img src="/media/upload.png" width="80" alt="" />
         <header>Drag & Drop to Upload File</header>
+        <span>(Only .csv or .xlsx)</span>
       </div>
       <span>OR</span>
       <button onclick="inputClick()" id="browse">Browse File</button>
@@ -22,6 +23,16 @@
         accept=".xlsx, .xls, .csv"
         hidden
       />
+
+      <div id="info">
+        <ul>
+          Pre-processing is recommended (Convert continuous values to nominal
+          ones)
+        </ul>
+        <ul>
+          Last column will be considered as labels
+        </ul>
+      </div>
     </div>
     <div class="buttons hidden">
       <div class="left-buttons">
@@ -47,6 +58,7 @@
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
+          <option value="100">100</option>
         </select>
         <button onclick="generateTable()" id="show-row" class="btn">
           Show More Rows
