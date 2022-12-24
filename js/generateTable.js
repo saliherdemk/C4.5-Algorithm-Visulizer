@@ -44,7 +44,7 @@ function setIncreaseRowInputs() {
 
 function toggleTable() {
   if (toggleTableBtn.innerText === "Shrink Table") {
-    tableContainer.style.maxHeight = "90px";
+    tableContainer.style.maxHeight = "175px";
     toggleTableBtn.innerText = "Expand Table";
     return;
   }
@@ -65,17 +65,18 @@ function createRow(element) {
 
 function generateInputRow(keys) {
   let row = table.insertRow();
-  row.classList.add("row");
+  row.classList.add("input-row");
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     let cell = row.insertCell();
-    cell.classList.add("cell");
+    cell.classList.add("input-cell");
 
     let element;
 
     if (i === keys.length - 1) {
       element = document.createElement("button");
-      element.innerText = "Perdict";
+      element.classList.add("predict-btn");
+      element.innerText = "Predict";
     } else {
       element = createSelectElement(key, attributes[key]);
     }
@@ -84,6 +85,13 @@ function generateInputRow(keys) {
 }
 
 function createSelectElement(key, options) {
+  if (!options.length) {
+    let div = document.createElement("div");
+    div.classList.add("ineffective");
+    div.appendChild(document.createTextNode("Does not effect"));
+    return div;
+  }
+
   var select = document.createElement("select");
   for (let i = 0; i < options.length; i++) {
     const element = options[i];

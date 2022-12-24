@@ -23,9 +23,11 @@ function checkFileIsLegit(file) {
     "text/csv",
   ];
   if (!fileTypes.includes(file.type)) {
-    // alert
+    alertEl.classList.add("alert-active");
     return;
   }
+  alertEl.classList.remove("alert-active");
+
   extractData(file);
 }
 
@@ -47,28 +49,34 @@ async function extractData(file) {
 }
 
 function switchToTableUi() {
-  dropArea.classList.add("hidden");
-  treeContainer.classList.remove("hidden");
-  controlPanel.classList.remove("hidden");
+  for (const element of [
+    dropArea,
+    treeContainer,
+    controlPanel,
+    backToRootBtn,
+  ]) {
+    element.classList.toggle("hidden");
+  }
 }
 
 function reset() {
-  treeContainer.innerHTML = "";
-  table.innerHTML = "";
+  treeContainer.innerHTML = table.innerHTML;
 
   toggleTableBtn.innerText = "Shrink Table";
   tableContainer.style.maxHeight = "1000px";
-  dropArea.classList.remove("hidden");
-  treeContainer.classList.add("hidden");
-  controlPanel.classList.add("hidden");
 
-  currRows = 0;
-  nodeNumber = 0;
-  treeHeight = 0;
+  for (const element of [
+    dropArea,
+    treeContainer,
+    controlPanel,
+    backToRootBtn,
+  ]) {
+    element.classList.toggle("hidden");
+  }
+
+  currRows = nodeNumber = treeHeight = totalRows = 0;
   scale = 1;
-  increaseRowSelect.value = 5;
-  increaseRow = 5;
-  totalRows = 0;
+  increaseRowSelect.value = increaseRow = 5;
 
   setIncreaseRowInputs();
 }

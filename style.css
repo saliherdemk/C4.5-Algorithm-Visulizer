@@ -18,6 +18,40 @@ h1 {
   text-align: center;
 }
 
+.alert-active {
+  color: red;
+  transition: all 0.5s;
+}
+
+select,
+.ineffective {
+  border: none;
+  background-color: rgb(90, 90, 90);
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  width: 100%;
+  padding-left: 10%;
+}
+
+#select-row {
+  text-align-last: center;
+}
+
+.predict-btn {
+  right: 10px;
+  top: 10px;
+  font-weight: 700;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: absolute;
+}
+
 /* Graph */
 .graph {
   position: relative;
@@ -53,7 +87,9 @@ h1 {
 
 #go-root-btn {
   position: absolute;
-  margin: 10px;
+  margin-right: 12%;
+  margin-top: 6%;
+  z-index: 99;
   right: 0;
 }
 
@@ -66,6 +102,12 @@ svg {
 .link {
   fill: none;
   stroke: black;
+}
+
+.input-row {
+  position: sticky;
+  bottom: 0;
+  background-color: rgb(90, 90, 90);
 }
 
 /* Table */
@@ -114,6 +156,14 @@ table {
   padding-bottom: 1rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  color: #111827;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.input-cell {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   color: #111827;
   font-weight: 500;
   white-space: nowrap;
@@ -191,11 +241,6 @@ table {
   margin-left: 10px;
   display: flex;
   flex-direction: column;
-}
-
-select {
-  text-align-last: center;
-  padding: 2px;
 }
 
 #show-row {

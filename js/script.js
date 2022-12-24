@@ -13,6 +13,7 @@ function main() {
   backToRoot();
 }
 
+// I know it seems complicated but it's not
 function createTree(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);
   var labelInfo;

@@ -10,6 +10,8 @@ const increaseRowSelect = document.querySelector("select");
 const currRowsSpan = document.getElementById("curr-rows");
 const totalRowsSpan = document.getElementById("total-rows");
 const showRowBtn = document.getElementById("show-row");
+const backToRootBtn = document.getElementById("go-root-btn");
+const alertEl = document.getElementById("alert");
 
 var starty, startx, scrleft, scrtop, isdown;
 

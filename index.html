@@ -13,7 +13,7 @@
       <div id="drag-drop">
         <img src="/media/upload.png" width="80" alt="" />
         <header>Drag & Drop to Upload File</header>
-        <span>(Only .csv or .xlsx)</span>
+        <span id="alert">(Only .csv or .xlsx)</span>
       </div>
       <span>OR</span>
       <button onclick="inputClick()" id="browse">Browse File</button>
@@ -70,9 +70,11 @@
       <table></table>
     </div>
 
-    <div class="graph hidden">
-      <button id="go-root-btn" onclick="backToRoot()">asd</button>
-    </div>
+    <button id="go-root-btn" class="hidden" onclick="backToRoot()">
+      Back to Root
+    </button>
+
+    <div class="graph hidden"></div>
   </body>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.core.min.js"
