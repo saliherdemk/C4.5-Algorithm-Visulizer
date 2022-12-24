@@ -6,7 +6,7 @@ function main() {
 
   generateInputRow(keys);
 
-  prunedTree && prepareRoot(root);
+  prepareRoot(root);
 
   drawGraph(root);
 
@@ -201,7 +201,6 @@ function zoom(event) {
   scale = Math.min(Math.max(0.25, scale), 1);
 
   el.style.transform = `scale(${scale})`;
-  // backToRoot();
 }
 
 treeContainer.onwheel = zoom;
@@ -219,5 +218,15 @@ function setIncreaseRow() {
 }
 
 function predict() {
-  console.log(predAttributes);
+  var a = findNodeElement(root.name);
+  console.log(a);
+  a.style.backgroundColor = "green !important";
+}
+
+function findNodeElement(text) {
+  var nodes = document.querySelectorAll(".node");
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if (node.lastChild.textContent === text) return node;
+  }
 }

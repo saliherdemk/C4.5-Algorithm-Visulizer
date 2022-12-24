@@ -17,7 +17,6 @@ var starty, startx, scrleft, scrtop, isdown;
 
 var root;
 
-var prunedTree = true;
 var currRows = 0;
 var increaseRow = 5;
 var pureData;

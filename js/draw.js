@@ -82,24 +82,4 @@ function drawGraph(root) {
       return i;
     })
     .attr("d", diagonal);
-
-  if (prunedTree) return;
-  var pathText = nodeEnter
-    .append("text")
-    .attr("y", function (d) {
-      return d.parent ? -(d.y - d.parent.y) / 2 + 5 : 0;
-    })
-    .attr("x", function (d) {
-      return !d.parent ? 0 : d.parent?.children.length * -5;
-    })
-    .style("font-size", "13px");
-
-  pathText
-    .transition()
-    .delay(function (d, i) {
-      return i;
-    })
-    .text(function (d) {
-      return d.attr;
-    });
 }
