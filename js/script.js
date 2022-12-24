@@ -217,3 +217,7 @@ function backToRoot() {
 function setIncreaseRow() {
   increaseRow = parseInt(increaseRowSelect.value);
 }
+
+function predict() {
+  console.log(predAttributes);
+}

@@ -69,17 +69,17 @@ function generateInputRow(keys) {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     let cell = row.insertCell();
-    cell.classList.add("input-cell");
 
     let element;
 
     if (i === keys.length - 1) {
-      element = document.createElement("button");
-      element.classList.add("predict-btn");
-      element.innerText = "Predict";
-    } else {
-      element = createSelectElement(key, attributes[key]);
+      cell.classList.add("predict-btn-cell");
+      cell.innerText = "Predict";
+      cell.onclick = predict;
+      return;
     }
+    cell.classList.add("input-cell");
+    element = createSelectElement(key, attributes[key]);
     cell.appendChild(element);
   }
 }
