@@ -10,7 +10,7 @@ function main() {
 
   drawGraph(root);
 
-  backToRoot();
+  goToNode("root");
 }
 
 // I know it seems complicated but it's not
@@ -205,8 +205,10 @@ function zoom(event) {
 
 treeContainer.onwheel = zoom;
 
-function backToRoot() {
-  document.querySelector(".node").scrollIntoView({
+function goToNode(type) {
+  let node = type === "root" ? document.querySelector(".node") : predictedNode;
+  console.log(node);
+  node.scrollIntoView({
     behavior: "auto",
     block: "nearest",
     inline: "center",
@@ -217,16 +219,40 @@ function setIncreaseRow() {
   increaseRow = parseInt(increaseRowSelect.value);
 }
 
-function predict() {
-  var a = findNodeElement(root.name);
-  console.log(a);
-  a.style.backgroundColor = "green !important";
+function predict(parent) {
+  parent == root && clearNodeColor();
+  let children = parent.children;
+
+  let circle = findNodeElement(
+    "n-" + parent.name,
+    parent.parent ? "id" + parent.parent.id : "id0"
+  );
+  let isLabel = parent.depth % 2;
+  circle.classList.add(isLabel ? "on-path-label" : "on-path-node");
+
+  if (!children) return;
+
+  let newParent;
+  if (!isLabel) {
+    newParent = children.find((e) => e.name === predAttributes[parent.name]);
+  } else {
+    newParent = children[Object.keys(children)[0]];
+  }
+
+  predict(newParent);
 }
 
-function findNodeElement(text) {
-  var nodes = document.querySelectorAll(".node");
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    if (node.lastChild.textContent === text) return node;
+function clearNodeColor() {
+  var circles = document.querySelectorAll("circle");
+  for (let i = 0; i < circles.length; i++) {
+    const circle = circles[i];
+    circle.classList.remove("on-path-label", "on-path-node");
   }
+}
+
+function findNodeElement(text, parentId) {
+  console.log(text, parentId);
+  var circle = document.querySelector(`[text=${text}][parent-id=${parentId}]`);
+  predictedNode = circle;
+  return circle;
 }

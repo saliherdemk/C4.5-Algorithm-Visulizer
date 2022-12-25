@@ -3,12 +3,10 @@
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
   dropArea.classList.add("active");
-  dragText.textContent = "Release to Upload File";
 });
 
 dropArea.addEventListener("dragleave", () => {
   dropArea.classList.remove("active");
-  dragText.textContent = "Drag & Drop to Upload File";
 });
 
 dropArea.addEventListener("drop", (event) => {
@@ -49,28 +47,18 @@ async function extractData(file) {
 }
 
 function switchToTableUi() {
-  for (const element of [
-    dropArea,
-    treeContainer,
-    controlPanel,
-    backToRootBtn,
-  ]) {
+  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
     element.classList.toggle("hidden");
   }
 }
 
 function reset() {
-  treeContainer.innerHTML = table.innerHTML;
+  treeContainer.innerHTML = table.innerHTML = "";
 
   toggleTableBtn.innerText = "Shrink Table";
   tableContainer.style.maxHeight = "1000px";
 
-  for (const element of [
-    dropArea,
-    treeContainer,
-    controlPanel,
-    backToRootBtn,
-  ]) {
+  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
     element.classList.toggle("hidden");
   }
 

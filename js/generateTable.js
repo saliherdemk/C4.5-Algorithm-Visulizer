@@ -2,9 +2,7 @@
 
 function generateTableHead() {
   var keys = Object.keys(pureData[0]);
-  let thead = table.createTHead();
-  thead.classList.add("thead");
-  let row = thead.insertRow();
+  let row = table.insertRow();
 
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
@@ -30,6 +28,12 @@ function generateTable() {
 
   currRows += increaseRow;
   setIncreaseRowInputs();
+
+  AdjustInputRowPosition();
+}
+function AdjustInputRowPosition() {
+  const inpRow = document.querySelector(".input-row");
+  inpRow && table.appendChild(inpRow);
 }
 
 function setIncreaseRowInputs() {
@@ -75,7 +79,9 @@ function generateInputRow(keys) {
     if (i === keys.length - 1) {
       cell.classList.add("predict-btn-cell");
       cell.innerText = "Predict";
-      cell.onclick = predict;
+      cell.onclick = () => {
+        predict(root);
+      };
       return;
     }
     cell.classList.add("input-cell");

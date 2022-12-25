@@ -47,7 +47,13 @@ function drawGraph(root) {
     .delay(function (d, i) {
       return i;
     })
-    .attr("r", 25)
+    .attr("r", 30)
+    .attr("parent-id", function (d, _) {
+      return d.parent ? "id" + d.parent.id : "id0";
+    })
+    .attr("text", function (d, _) {
+      return "n-" + d.name;
+    })
     .style("fill", function (d, i) {
       var isLabel = d.parent && !d.attr;
       return isLabel ? "#f2f2f2" : "white";
