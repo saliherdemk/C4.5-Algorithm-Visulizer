@@ -56,6 +56,7 @@ select,
   border: 2px solid black;
   margin: auto;
   margin-top: 5%;
+  margin-bottom: 5%;
   overflow: auto;
   background-color: white;
   text-align: center;
