@@ -1,5 +1,4 @@
 // https://www.valentinog.com/blog/html-table/
-
 function generateTableHead() {
   var keys = Object.keys(pureData[0]);
   let row = table.insertRow();
@@ -31,6 +30,7 @@ function generateTable() {
 
   AdjustInputRowPosition();
 }
+
 function AdjustInputRowPosition() {
   const inpRow = document.querySelector(".input-row");
   inpRow && table.appendChild(inpRow);

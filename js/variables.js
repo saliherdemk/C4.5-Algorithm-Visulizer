@@ -12,8 +12,8 @@ const showRowBtn = document.getElementById("show-row");
 const graphBtns = document.querySelector(".graph-btns");
 const alertEl = document.getElementById("alert");
 
-var starty, startx, scrleft, scrtop, isdown;
-var scale = 1;
+var starty, startx, scrleft, scrtop, isdown; // for drag scroll
+var scale = 1; // zoom scale
 
 var root;
 
@@ -24,5 +24,5 @@ var nodeNumber = 0; // This and treeHeight just for setting svg size
 var treeHeight = 0;
 var totalRows = 0;
 var attributes = {}; // store data attributes for select option
-var predAttributes = {};
+var predAttributes = {}; // data for prediction
 var predictedNode = null;

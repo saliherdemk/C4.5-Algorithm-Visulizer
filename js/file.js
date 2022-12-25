@@ -1,5 +1,4 @@
 // https://www.codingnepalweb.com/drag-drop-file-upload-feature-javascript/
-
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
   dropArea.classList.add("active");
@@ -44,29 +43,6 @@ async function extractData(file) {
   totalRows = pureData.length;
   switchToTableUi();
   main();
-}
-
-function switchToTableUi() {
-  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
-    element.classList.toggle("hidden");
-  }
-}
-
-function reset() {
-  treeContainer.innerHTML = table.innerHTML = "";
-
-  toggleTableBtn.innerText = "Shrink Table";
-  tableContainer.style.maxHeight = "1000px";
-
-  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
-    element.classList.toggle("hidden");
-  }
-
-  currRows = nodeNumber = treeHeight = totalRows = 0;
-  scale = 1;
-  increaseRowSelect.value = increaseRow = 5;
-
-  setIncreaseRowInputs();
 }
 
 function setFile(e) {

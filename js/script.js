@@ -1,26 +1,25 @@
 function main() {
   generateTableHead();
   generateTable();
+
   var keys = Object.keys(pureData[0]);
   createTree(pureData, keys);
-
   generateInputRow(keys);
-
   prepareRoot(root);
-
   drawGraph(root);
-
   goToNode("root");
 }
 
 // I know it seems complicated but it's not
 function createTree(data, keys, key = "", parent = null) {
   var [shaped, len] = dataShapeUp(data, keys);
+
   var labelInfo;
   var leaf;
   var infos = {};
   Object.entries(shaped).forEach((element) => {
     if (element[1] instanceof Array) {
+      // labeled column
       var a = element[1];
       [leaf, labelInfo] = calculateSplitInfo({ a }, len);
     } else {
@@ -32,7 +31,7 @@ function createTree(data, keys, key = "", parent = null) {
   var nodeAttr = leaf ? leaf : decision;
 
   var node = new Node(nodeAttr, key, parent);
-  nodeNumber += 1;
+  nodeNumber += 1; // just for adjusting svg size
 
   if (parent) {
     parent.addChildren(node);
@@ -46,7 +45,7 @@ function createTree(data, keys, key = "", parent = null) {
   for (const [_, value] of Object.entries(data)) {
     var subKey = value[decision];
 
-    !attributes[decision].includes(subKey) && attributes[decision].push(subKey);
+    !attributes[decision].includes(subKey) && attributes[decision].push(subKey); // saving attributes for select input
 
     if (subSets[subKey]) {
       subSets[subKey].push(value);
@@ -60,19 +59,20 @@ function createTree(data, keys, key = "", parent = null) {
   }
 }
 
+// Calculation of gains and determination of decision node
 function decisionNode(labelInfo, infos) {
-  var result = {};
+  var gains = {};
   for (const [key, value] of Object.entries(infos)) {
-    result[key] = (labelInfo - value).toFixed(10);
+    gains[key] = (labelInfo - value).toFixed(10);
   }
 
-  const isAllZero = Object.values(result).every(
+  const isAllZero = Object.values(gains).every(
     (item) => item === "0.0000000000"
   );
 
   return isAllZero
     ? false
-    : Object.keys(result).reduce((a, b) => (result[a] > result[b] ? a : b));
+    : Object.keys(gains).reduce((a, b) => (gains[a] > gains[b] ? a : b));
 }
 
 function prepareRoot(root) {
@@ -97,6 +97,7 @@ function initilizeObject(keys) {
   return obj;
 }
 
+// Prepare for recursive function. We just need to know that how many of which data are in each column.
 function dataShapeUp(data, keys) {
   var result = initilizeObject(keys);
   var label = keys[keys.length - 1];
@@ -117,6 +118,7 @@ function dataShapeUp(data, keys) {
   return [result, len];
 }
 
+// https://levelup.gitconnected.com/c4-5-decision-tree-explained-from-bottom-up-67468c1619a7
 function calculateSplitInfo(data, len) {
   var splitInfo = 0;
   var leaf;
@@ -156,58 +158,8 @@ function count(data) {
   return obj;
 }
 
-//https://codepen.io/Gutto/pen/GBLPyN
-treeContainer.addEventListener("mousedown", (e) => MouseDown(e));
-treeContainer.addEventListener("mouseup", (e) => mouseUp(e));
-treeContainer.addEventListener("mouseleave", (e) => mouseLeave(e));
-treeContainer.addEventListener("mousemove", (e) => mouseMove(e));
-
-function MouseDown(e) {
-  isdown = true;
-  startx = e.pageX - treeContainer.offsetLeft;
-  starty = e.pageY - treeContainer.offsetTop;
-  scrleft = treeContainer.scrollLeft;
-  scrtop = treeContainer.scrollTop;
-}
-
-function mouseUp(e) {
-  isdown = false;
-}
-
-function mouseLeave(e) {
-  isdown = false;
-}
-
-function mouseMove(e) {
-  if (isdown) {
-    e.preventDefault();
-
-    var y = e.pageY - treeContainer.offsetTop;
-    var goY = y - starty;
-    treeContainer.scrollTop = scrtop - goY;
-
-    var x = e.pageX - treeContainer.offsetLeft;
-    var goX = x - startx;
-    treeContainer.scrollLeft = scrleft - goX;
-  }
-}
-
-function zoom(event) {
-  const el = document.querySelector("svg");
-
-  event.preventDefault();
-
-  scale += event.deltaY * -0.001;
-  scale = Math.min(Math.max(0.25, scale), 1);
-
-  el.style.transform = `scale(${scale})`;
-}
-
-treeContainer.onwheel = zoom;
-
 function goToNode(type) {
   let node = type === "root" ? document.querySelector(".node") : predictedNode;
-  console.log(node);
   node.scrollIntoView({
     behavior: "auto",
     block: "nearest",
@@ -223,6 +175,7 @@ function predict(parent) {
   parent == root && clearNodeColor();
   let children = parent.children;
 
+  // "n-" and "id" prefixes must. Html atrributes can't start with number
   let circle = findNodeElement(
     "n-" + parent.name,
     parent.parent ? "id" + parent.parent.id : "id0"
@@ -251,8 +204,30 @@ function clearNodeColor() {
 }
 
 function findNodeElement(text, parentId) {
-  console.log(text, parentId);
   var circle = document.querySelector(`[text=${text}][parent-id=${parentId}]`);
   predictedNode = circle;
   return circle;
+}
+
+function switchToTableUi() {
+  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
+    element.classList.toggle("hidden");
+  }
+}
+
+function reset() {
+  treeContainer.innerHTML = table.innerHTML = "";
+
+  toggleTableBtn.innerText = "Shrink Table";
+  tableContainer.style.maxHeight = "1000px";
+
+  for (const element of [dropArea, treeContainer, controlPanel, graphBtns]) {
+    element.classList.toggle("hidden");
+  }
+
+  currRows = nodeNumber = treeHeight = totalRows = 0;
+  scale = 1;
+  increaseRowSelect.value = increaseRow = 5;
+
+  setIncreaseRowInputs();
 }
