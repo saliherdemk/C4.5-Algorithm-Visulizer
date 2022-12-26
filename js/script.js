@@ -201,6 +201,7 @@ function clearNodeColor() {
     const circle = circles[i];
     circle.classList.remove("on-path-label", "on-path-node");
   }
+  predictedNode = null;
 }
 
 function findNodeElement(text, parentId) {
