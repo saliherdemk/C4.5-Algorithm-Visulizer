@@ -29,8 +29,8 @@ function checkFileIsLegit(file) {
 }
 
 async function extractData(file) {
-  const fileData = await file.arrayBuffer();
-  const workbook = XLSX.read(fileData);
+  const workbook =
+    file === "default" ? defaultDataSet : XLSX.read(await file.arrayBuffer());
 
   let worksheets = {};
   for (const sheetName of workbook.SheetNames) {

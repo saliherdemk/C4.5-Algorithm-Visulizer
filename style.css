@@ -25,6 +25,13 @@ h1 {
   padding: 2rem;
 }
 
+#default-ds-btn {
+  background-color: transparent;
+  color: #1d4ed8;
+  border: none;
+  cursor: pointer;
+}
+
 .alert-active {
   color: red;
   transition: all 0.5s;
@@ -202,7 +209,7 @@ table {
 
 #browse {
   padding: 0.9rem;
-  margin-top: 0.9rem;
+  margin-top: 0.2rem;
   background-color: transparent;
   color: #1d4ed8;
   border-radius: 0.25rem;
