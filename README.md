@@ -12,4 +12,4 @@ Last column will be considered as labels
 
 # Demo
 
-<img src="https://github.com/saliherdemk/C4.5-Algorithm-Visulizer/blob/master/media/demo.gif" width="550" height="400">
+<img src="https://github.com/saliherdemk/C4.5-Algorithm-Visulizer/blob/master/media/demo.gif" width="550" height="350">
