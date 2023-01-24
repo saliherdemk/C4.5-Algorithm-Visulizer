@@ -8,7 +8,7 @@ First row will be considered as attributes
 
 Last column will be considered as labels
 
-[Live Demo](https://saliherdemk.github.io)
+[Live Demo](https://saliherdemk.github.io/C4.5-Algorithm-Visulizer/)
 
 # Demo
 
